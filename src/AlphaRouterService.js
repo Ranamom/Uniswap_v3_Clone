@@ -15,18 +15,18 @@ const router = new AlphaRouter({ chainId: chainId, provider: web3Provider })
 const name0 = 'Wrapped Ether'
 const symbol0 = 'WETH'
 const decimals0 = 18
-const address0 = '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
+export const address0 = '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
 
 const name1 = 'Uniswap Token'
 const symbol1 = 'UNI'
 const decimals1 = 18
-const address1 = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
+export const address1 = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
 
 const WETH = new Token(chainId, address0, decimals0, symbol0, name0)
 const UNI = new Token(chainId, address1, decimals1, symbol1, name1)
 
-export const getWethContract = () => new ethers.Contract(address0, ERC20ABI, web3Provider)
-export const getUniContract = () => new ethers.Contract(address1, ERC20ABI, web3Provider)
+export const getWethContract = new ethers.Contract(address0, ERC20ABI, web3Provider)
+export const getUniContract = new ethers.Contract(address1, ERC20ABI, web3Provider)
 
 export const getPrice = async (inputAmount, slippageAmount, deadline, walletAddress) => {
   const percentSlippage = new Percent(slippageAmount, 100)
