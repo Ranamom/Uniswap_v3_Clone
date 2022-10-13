@@ -10,7 +10,7 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  min-height: auto;
 }
 
 /******************************************************************************/
@@ -60,7 +60,7 @@ body {
 /******************************************************************************/
 /* Swap Container */
 .appBody {
-  height: 100%;
+  /* height: auto; */
   padding-top: 80px;
 }
 
@@ -160,6 +160,11 @@ body {
   border-radius: 20px;
   background-color: #dd2f81;
   cursor: pointer
+}
+
+.swapButton :disabled {
+  background-color: #6a4858;
+  color: black;
 }
 
 /******************************************************************************/

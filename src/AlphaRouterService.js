@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { AlphaRouter } = require('@uniswap/smart-order-router')
 const { Token, CurrencyAmount, TradeType, Percent } = require('@uniswap/sdk-core')
 const { ethers, BigNumber } = require('ethers')
@@ -29,11 +30,11 @@ export const getWethContract = new ethers.Contract(address0, ERC20ABI, web3Provi
 export const getUniContract = new ethers.Contract(address1, ERC20ABI, web3Provider)
 
 export const getPrice = async (inputAmount, slippageAmount, deadline, walletAddress) => {
+  const resList = [0, 0, 0]
   const percentSlippage = new Percent(slippageAmount, 100)
-  const wei = ethers.utils.parseUnits(inputAmount.toString(), decimals0)
+  const wei = ethers.utils.parseUnits(inputAmount, decimals0)
   const currencyAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(wei))
-
-  const route = await router.route(
+  await router.route(
     currencyAmount,
     UNI,
     TradeType.EXACT_INPUT,
@@ -42,25 +43,30 @@ export const getPrice = async (inputAmount, slippageAmount, deadline, walletAddr
       slippageTolerance: percentSlippage,
       deadline: deadline,
     }
-  )
+  ).then(res => {
+    resList[0] = res
+    
+    const transaction = {
+      data: res.methodParameters.calldata,
+      to: V3_SWAP_ROUTER_ADDRESS,
+      value: BigNumber.from(res.methodParameters.value),
+      from: walletAddress,
+      gasPrice: BigNumber.from(res.gasPriceWei),
+      gasLimit: ethers.utils.hexlify(1000000)
+    }
 
-  const transaction = {
-    data: route.methodParameters.calldata,
-    to: V3_SWAP_ROUTER_ADDRESS,
-    value: BigNumber.from(route.methodParameters.value),
-    from: walletAddress,
-    gasPrice: BigNumber.from(route.gasPriceWei),
-    gasLimit: ethers.utils.hexlify(1000000)
-  }
+    resList[1] = transaction
 
-  const quoteAmountOut = route.quote.toFixed(6)
-  const ratio = (inputAmount / quoteAmountOut).toFixed(3)
+    const quoteAmountOut = res.quote.toFixed(6)
+    const ratio = (inputAmount / quoteAmountOut).toFixed(3)
 
-  return [
-    transaction,
-    quoteAmountOut,
-    ratio
-  ]
+    resList[2] = ratio
+
+  }).catch(err => {
+    console.log(err)
+  })
+
+  return resList
 }
 
 export const runSwap = async (transaction, signer) => {

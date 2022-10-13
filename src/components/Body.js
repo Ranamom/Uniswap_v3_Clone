@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { GearFill } from 'react-bootstrap-icons'
-import { getWethContract, getUniContract, getPrice, runSwap, address0, address1 } from '../AlphaRouterService'
+import { GearFill, Router } from 'react-bootstrap-icons'
+import { Token, CurrencyAmount, TradeType, Percent } from '@uniswap/sdk-core'
+import JSBI from 'jsbi'
+import { getWethContract, getUniContract, address0, address1 } from '../AlphaRouterService'
 import { ethers } from 'ethers';
 import Config from './Config';
 import CurrencyField from './CurrencyField';
@@ -12,48 +14,74 @@ const Body = () => {
     const {
         onClickConnector,
         account,
-        disconnectWallet,
         signer,
-        provdier,
-        ethersProvider
+        expProvider,
+        wethContract,
+        quoterContract,
+        uniContract,
+        ratio,
+        setRatio,
+        getPrice,
+        runSwap
     } = context
     const [slippageAmount, setSlippageAmount] = useState(2)
     const [deadlineMinutes, setDeadlineMinutes] = useState(10)
     const [showModal, setShowModal] = useState(undefined)
     const [inputAmount, setInputAmount] = useState(undefined)
     const [outputAmount, setOutputAmount] = useState(undefined)
-    const [transaction, setTransaction] = useState(undefined)
+    const [transaction, setTransaction] = useState(null)
     const [loading, setLoading] = useState(undefined)
-    const [ratio, setRatio] = useState(undefined)
     const [wethAmount, setWethAmount] = useState(undefined)
     const [uniAmount, setUniAmount] = useState(undefined)
 
-    
-    const getSwapPrice = (inputAmount) => {
-        setLoading(true)
-        setInputAmount(inputAmount)
-    
-        const swap = getPrice(
-          inputAmount,
-          slippageAmount,
-          Math.floor(Date.now() / 1000 + (deadlineMinutes * 60)),
-          account
-        ).then(data => {
-          setTransaction(data[0])
-          setOutputAmount(data[1])
-          setRatio(data[2])
-          setLoading(false)
-        })
+    const UNI = new Token(5, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, "UNI", 'Uniswap token')
 
-        swap()
-      }
+    useEffect(() => {
+        //    flahlf
+    }, [ratio])
+
+    const getSwapPrice = async (inputAmount) => {
+        if (inputAmount) {
+            setLoading(true)
+            setInputAmount(inputAmount)
+            // const amountIn = ethers.utils.parseUnits(inputAmount, 18)
+            // await quoterContract.callStatic.quoteExactInputSingle(
+            //     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+            //     '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+            //     3000,
+            //     amountIn,
+            //     0
+            // ).then(res => {
+            //     const amountOut = ethers.utils.formatUnits(res, 18)
+            //     setLoading(false)
+            //     setOutputAmount(amountOut)
+            //     const route = await 
+            // })
+            await getPrice(
+                inputAmount,
+                slippageAmount, 
+                Math.floor(Date.now() / 1000 + (deadlineMinutes * 60)),
+                account
+            ).then(res => {
+                setTransaction(res[0])
+                setOutputAmount(res[1])
+                setRatio(res[2])
+                setLoading(false)
+            })
+        }
+        else {
+            setOutputAmount(0)
+        }
+    }
 
     return (
         <div className="appBody">
             <div className="swapContainer">
                 <div className="swapHeader">
                     <span className="swapText">Swap</span>
-                    <span className="gearContainer" onClick={() => setShowModal(true)}>
+                    <span className="gearContainer" onClick={() => {
+                        setShowModal(true)
+                        }}>
                         <GearFill />
                     </span>
                     {showModal && (
@@ -72,31 +100,33 @@ const Body = () => {
                         tokenName="WETH"
                         getSwapPrice={getSwapPrice}
                         signer={signer}
+                        contract={wethContract}
                         balance={wethAmount} />
-                    <CurrencyField
+                    <CurrencyField   
                         field="output"
                         tokenName="UNI"
                         value={outputAmount}
                         signer={signer}
+                        contract={uniContract}
                         balance={uniAmount}
                         spinner={BeatLoader}
                         loading={loading} />
                 </div>
-
-                <div className="ratioContainer">
+                <div className="ratioContainer"> 
                     {ratio && (
-                        <>
-                            {`1 UNI = ${ratio} WETH`}
-                        </>
+                        <div>
+                            {`1 UNI = ${ratio.substring(0,8)} WETH`}
+                        </div>
                     )}
                 </div>
 
                 {/* Swap Button */}
-                <div className="swapButtonContainer">
+                <div className="swapButtonContainer" >
                     {account ? (
                         <div
-                            onClick={() => runSwap(transaction, signer)}
+                            onClick={() => runSwap(transaction, signer, inputAmount)}
                             className="swapButton"
+                            disabled={outputAmount === undefined}
                         >
                             Swap
                         </div>
