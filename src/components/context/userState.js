@@ -112,7 +112,7 @@ const UserState = (props) => {
 
         const quoterContractInstance = new ethers.Contract('0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6', QuoterABI.abi, ethersProvider)
 
-        const amountIn = ethers.utils.parseUnits('1', 18)
+        // const amountIn = ethers.utils.parseUnits('1', 18)
         // await quoterContractInstance.callStatic.quoteExactInputSingle(
         //     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
         //     '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
@@ -123,6 +123,7 @@ const UserState = (props) => {
         //     const amountOut = ethers.utils.formatUnits(res, 18)
         //     setRatio(amountOut)
         // })
+
         setQuoterContract(quoterContractInstance)
     }
 
@@ -182,11 +183,11 @@ const UserState = (props) => {
         return resList
     }
 
-    async function runSwap(transaction, signer, inputAmount){
+    async function runSwap(transaction, inputAmount){
         console.log(inputAmount)
         const approvalAmount = ethers.utils.parseUnits(inputAmount.toString(), 18)
         const contract0 = wethContract
-        await contract0.connect(signer).approve(
+        await contract0.connect(signerInstance).approve(
             V3_SWAP_ROUTER_ADDRESS,
             approvalAmount
         )
@@ -196,7 +197,7 @@ const UserState = (props) => {
     
 
     return (
-        <UserContext.Provider value={{ ethersProvider, provider, signer, onClickConnector, account, disconnectWallet, wethContract, uniContract, userETHbalance, connected, web3Modal, expProvider, quoterContract, ratio, setRatio, getPrice, runSwap }}>
+        <UserContext.Provider value={{ ethersProvider, provider, signer, onClickConnector, account, disconnectWallet, wethContract, uniContract, userETHbalance, connected, web3Modal, expProvider, quoterContract, ratio, setRatio, getPrice, runSwap, signerInstance }}>
             {props.children}
         </UserContext.Provider>
     )

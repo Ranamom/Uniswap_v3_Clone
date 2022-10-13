@@ -124,7 +124,7 @@ const Body = () => {
                 <div className="swapButtonContainer" >
                     {account ? (
                         <div
-                            onClick={() => runSwap(transaction, signer, inputAmount)}
+                            onClick={() => runSwap(transaction, inputAmount)}
                             className="swapButton"
                             disabled={outputAmount === undefined}
                         >
