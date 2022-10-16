@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# Uniswap V3 Clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I built this dapp using ReactJS and Uniswap SDK which talks to Uniswap V3 smart contracts. 
 
-## Available Scripts
+![Screenshot (37)](https://user-images.githubusercontent.com/106004070/195989055-27e15ffe-cbf8-48af-9312-613eadf03512.png)
 
-In the project directory, you can run:
+## It has Wallet Connect functionality. 
 
-### `npm start`
+![Screenshot (38)](https://user-images.githubusercontent.com/106004070/195989047-a1d0d1b5-572f-41d0-a433-6cbd7cc93344.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Used web3Modal to implement wallet connect functionality
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Fethces optimal UNI tokens according to liquidity for provided WETH tokens.
 
-### `npm test`
+![Screenshot (39)](https://user-images.githubusercontent.com/106004070/195989091-f0506316-d32e-4b94-a611-f7b88894fa8b.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Fethces optimal price form Quoter contract of Uniswap which uses Oracle Library. 
 
-### `npm run build`
+## Implements the Swap function when clicked on 'Swap'
+![Screenshot (41)](https://user-images.githubusercontent.com/106004070/195989260-bca5e054-6d69-444b-8e55-0f8e00f31084.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
