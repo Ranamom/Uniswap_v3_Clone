@@ -1,13 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { GearFill, Router } from 'react-bootstrap-icons'
-import { Token, CurrencyAmount, TradeType, Percent } from '@uniswap/sdk-core'
-import JSBI from 'jsbi'
-import { getWethContract, getUniContract, address0, address1 } from '../AlphaRouterService'
-import { ethers } from 'ethers';
-import Config from './Config';
-import CurrencyField from './CurrencyField';
-import BeatLoader from "react-spinners/BeatLoader";
-import userContext from './context/userContext';
+import { GearFill } from 'react-bootstrap-icons'
+import { Token } from '@uniswap/sdk-core'
+import Config from './Config'
+import CurrencyField from './CurrencyField'
+import BeatLoader from "react-spinners/BeatLoader"
+import userContext from './context/userContext'
 
 const Body = () => {
     const context = useContext(userContext)
@@ -15,10 +12,12 @@ const Body = () => {
         onClickConnector,
         account,
         signer,
-        expProvider,
-        wethContract,
-        quoterContract,
-        uniContract,
+        inputToken,
+        outputToken,
+        inputTokenName,
+        outputTokenName,
+        inputContract,
+        outputContract,
         ratio,
         setRatio,
         getPrice,
@@ -31,32 +30,16 @@ const Body = () => {
     const [outputAmount, setOutputAmount] = useState(undefined)
     const [transaction, setTransaction] = useState(null)
     const [loading, setLoading] = useState(undefined)
-    const [wethAmount, setWethAmount] = useState(undefined)
-    const [uniAmount, setUniAmount] = useState(undefined)
-
-    const UNI = new Token(5, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, "UNI", 'Uniswap token')
 
     useEffect(() => {
-        //    flahlf
+        
     }, [ratio])
 
     const getSwapPrice = async (inputAmount) => {
         if (inputAmount) {
             setLoading(true)
-            setInputAmount(inputAmount)
-            // const amountIn = ethers.utils.parseUnits(inputAmount, 18)
-            // await quoterContract.callStatic.quoteExactInputSingle(
-            //     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
-            //     '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-            //     3000,
-            //     amountIn,
-            //     0
-            // ).then(res => {
-            //     const amountOut = ethers.utils.formatUnits(res, 18)
-            //     setLoading(false)
-            //     setOutputAmount(amountOut)
-            //     const route = await 
-            // })
+            setInputAmount(inputAmount) 
+            
             await getPrice(
                 inputAmount,
                 slippageAmount, 
@@ -97,25 +80,24 @@ const Body = () => {
                 <div className="swapBody">
                     <CurrencyField
                         field="input"
-                        tokenName="WETH"
+                        tokenName={inputTokenName}
                         getSwapPrice={getSwapPrice}
                         signer={signer}
-                        contract={wethContract}
-                        balance={wethAmount} />
+                        contract={inputContract} // we can give input contract here
+                        />
                     <CurrencyField   
                         field="output"
-                        tokenName="UNI"
-                        value={outputAmount}
+                        tokenName={outputTokenName}
+                        value={outputAmount} 
                         signer={signer}
-                        contract={uniContract}
-                        balance={uniAmount}
-                        spinner={BeatLoader}
+                        contract={outputContract} // we can give output contract here
+                        spinner={BeatLoader} 
                         loading={loading} />
                 </div>
                 <div className="ratioContainer"> 
                     {ratio && (
                         <div>
-                            {`1 UNI = ${ratio.substring(0,8)} WETH`}
+                            {`1 ${outputTokenName} = ${ratio.substring(0,8)} ${inputTokenName}`}
                         </div>
                     )}
                 </div>

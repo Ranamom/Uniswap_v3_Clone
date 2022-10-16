@@ -15,31 +15,39 @@ const UserState = (props) => {
     let provider;
     let signer;
     let ethersProvider;
+
+    // web3Modal 
     const [signerInstance, setSignerInstance] = useState(null)
-    const [router, setRouter] = useState(null);
+    const [router, setRouter] = useState(null)
     const [expProvider, setexpProvider] = useState(null)
     const [account, setAccount] = useState(null)
     const [web3Modal, setWeb3Modal] = useState(null)
+    const [connected, setConnected] = useState(false)
+
+    // Contracts
     const [wethContract, setWethContract] = useState(null)
     const [uniContract, setUniContract] = useState(null)
+    const [linkContract, setLinkContract] = useState(null)
+    const [daiContract, setDaiContract] = useState(null)
     const [quoterContract, setQuoterContract] = useState(null)
-    const [connected, setConnected] = useState(false)
+
+    const [inputToken, setInputToken] = useState(null) //done
+    const [inputTokenName, setInputTokenName] = useState('WETH')
+    const [outputTokenName, setOutputTokenName] = useState('UNI')
+    const [outputToken, setOutPutToken] = useState(null)
+    const [inputContract, setInputContract] = useState(null)
+    const [outputContract, setOutputContract] = useState(null)
+    const [mode, setMode] = useState(null)
+
     const [userETHbalance, setUserETHBalance] = useState(null)
-    const [ratio, setRatio] = useState(null)
+    const [ratio, setRatio] = useState(null) 
 
     const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
-    const name0 = 'Wrapped Ether'
-    const symbol0 = 'WETH'
-    const decimals0 = 18
-    const address0 = '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
 
-    const name1 = 'Uniswap Token'
-    const symbol1 = 'UNI'
-    const decimals1 = 18
-    const address1 = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
-
-    const WETH = new Token(5, address0, decimals0, symbol0, name0)
-    const UNI = new Token(5, address1, decimals1, symbol1, name1)
+    const WETH = new Token(5, '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 18, 'WETH', 'Wrapped Ether')
+    const UNI = new Token(5, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, 'UNI', 'Uniswap Token')
+    const LINK = new Token(5, '0x326C977E6efc84E512bB9C30f76E30c160eD06FB', 18, 'LINK', 'ChainkLink Token')
+    const DAI = new Token(5, '0xdc31Ee1784292379Fbb2964b3B9C4124D8F89C60', 18, 'DAI', 'DAI Token')
 
     useEffect(() => {
         const providerOptions = {
@@ -96,7 +104,6 @@ const UserState = (props) => {
 
         const routerInstance = new AlphaRouter({ chainId: 5, provider: ethersProvider })
         setRouter(routerInstance)
-        // console.log(router)
 
         signer = ethersProvider.getSigner()
         setSignerInstance(signer)
@@ -110,21 +117,19 @@ const UserState = (props) => {
         const uniContractInstance = new ethers.Contract('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', abi, ethersProvider)
         setUniContract(uniContractInstance)
 
+        const linkContractInstance = new ethers.Contract('0x326C977E6efc84E512bB9C30f76E30c160eD06FB', abi,  ethersProvider)
+        setLinkContract(linkContractInstance)
+
+        const daiContractInstance = new ethers.Contract('0xdc31Ee1784292379Fbb2964b3B9C4124D8F89C60', abi, ethersProvider)
+        setDaiContract(daiContractInstance)
+
         const quoterContractInstance = new ethers.Contract('0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6', QuoterABI.abi, ethersProvider)
-
-        // const amountIn = ethers.utils.parseUnits('1', 18)
-        // await quoterContractInstance.callStatic.quoteExactInputSingle(
-        //     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
-        //     '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-        //     3000,
-        //     amountIn,
-        //     0
-        // ).then(res => {
-        //     const amountOut = ethers.utils.formatUnits(res, 18)
-        //     setRatio(amountOut)
-        // })
-
         setQuoterContract(quoterContractInstance)
+
+        setInputToken(WETH) 
+        setOutPutToken(UNI) 
+        setInputContract(wethContractInstance)
+        setOutputContract(uniContractInstance)
     }
 
     async function disconnectWallet() {
@@ -144,12 +149,11 @@ const UserState = (props) => {
     async function getPrice(inputAmount, slippageAmount, deadline, walletAddress) {
         const resList = [0, 0, 0]
         const percentSlippage = new Percent(slippageAmount, 100)
-        const wei = ethers.utils.parseUnits(inputAmount.toString(), decimals0)
-        const currencyAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(wei))
-        console.log(router)
+        const wei = ethers.utils.parseUnits(inputAmount.toString(), 18)
+        const currencyAmount = CurrencyAmount.fromRawAmount(inputToken, JSBI.BigInt(wei))
         await router.route(
             currencyAmount,
-            UNI,
+            outputToken,
             TradeType.EXACT_INPUT,
             {
                 recipient: walletAddress,
@@ -190,14 +194,11 @@ const UserState = (props) => {
         await contract0.connect(signerInstance).approve(
             V3_SWAP_ROUTER_ADDRESS,
             approvalAmount
-        )
-
-        signerInstance.sendTransaction(transaction)
+        ).then(res => signerInstance.sendTransaction(transaction))
     }
     
-
     return (
-        <UserContext.Provider value={{ ethersProvider, provider, signer, onClickConnector, account, disconnectWallet, wethContract, uniContract, userETHbalance, connected, web3Modal, expProvider, quoterContract, ratio, setRatio, getPrice, runSwap, signerInstance }}>
+        <UserContext.Provider value={{ ethersProvider, provider, signer, onClickConnector, account, disconnectWallet, wethContract, uniContract, daiContract, linkContract, userETHbalance, connected, web3Modal, expProvider, quoterContract, ratio, setRatio, getPrice, runSwap, signerInstance, inputToken, setInputToken, inputContract, setInputContract,outputToken, setOutPutToken, outputContract, setOutputContract, WETH, UNI, DAI, LINK, inputTokenName, setInputTokenName, outputTokenName, setOutputTokenName, mode, setMode}}>    
             {props.children}
         </UserContext.Provider>
     )

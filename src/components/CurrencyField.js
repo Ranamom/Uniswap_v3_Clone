@@ -5,16 +5,23 @@ const CurrencyField = props => {
   const context = useContext(userContext)
   const {
     account,
-    wethContract,
     connected,
-    quoterContract
+    setMode,
+    mode,
+    setOutputAmount
   } = context
 
   const [balance, setBalance] = useState(null)
-  const [inp, setInp] = useState(null)
 
   const getPrice = (value) => {
     props.getSwapPrice(value)
+  }
+
+  const onCLickToggleModal = () => {
+    setMode(props.field.toString())
+    document.getElementsByClassName('token-modal')[0].style.display = "flex"
+    console.log(props.field)
+    console.log(mode)
   }
 
   useEffect(() => {
@@ -25,9 +32,9 @@ const CurrencyField = props => {
 
     if (account && props.contract) {
       gettingIt()
-    }
+    } 
 
-  }, [account])
+  }, [account, balance, props.contract]) 
   
   return (
     <div className="row currencyInput">
@@ -47,7 +54,7 @@ const CurrencyField = props => {
         )}
       </div>
       <div className="col-md-6 tokenContainer">
-        <span className="tokenName">{props.tokenName}</span>
+        <span className="tokenName" onClick={() => onCLickToggleModal()}>{props.tokenName}</span>
         <div className="balanceContainer">
           <span className="balanceAmount">Balance: {balance && connected ? balance.slice(0,5) : ""}</span>
         </div>
@@ -57,3 +64,6 @@ const CurrencyField = props => {
 }
 
 export default CurrencyField
+
+//Cannot update a component (`UserState`) while rendering a different component (`TokenChangeModal`). To locate the bad setState() call inside `TokenChangeModal`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+// at TokenChangeModal (http:

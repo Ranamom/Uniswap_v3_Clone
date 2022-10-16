@@ -126,6 +126,8 @@ body {
   font-size: 28px;
   display: block;
   color: #000;
+  cursor: pointer;
+  /* margin-bottom: none; */
 }
 .balanceContainer {
   display: block;
@@ -162,7 +164,7 @@ body {
   cursor: pointer
 }
 
-.swapButton :disabled {
+.swapButton:disabled {
   background-color: #6a4858;
   color: black;
 }
@@ -216,4 +218,79 @@ body {
 .inputFieldUnitsContainer {
   padding-left: 0px !important;
   padding-top: 14px;
+}
+
+/* ****************************************************************************** */
+/* TokenChange Modal */
+
+.token-modal {
+  display: none;
+  position: absolute;
+  /* left: 0%; */
+  background-color: #bbd7e475;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  border: 1px solid pink;
+}
+
+.token-modal-container {
+  background-color: #7fadc2;
+  height: 400px;
+  width: 400px;
+  color: black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tokens {
+  padding: 1%;
+
+}
+
+.token {
+  /* background-color: #4c8dac; */
+  margin: 10px;
+  height: auto;
+  color: white;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: row;
+  /* border-radius: 20px; */
+  cursor: pointer;
+}
+
+.imgContainer {
+  display: flex;
+  align-items: center;
+}
+
+
+.tokenInfo{
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.tokenNaming{
+  margin: none;
+}
+
+.token p{
+  margin-bottom: 0%;
+  margin-right: 10px;
+}
+
+.modal-img{
+  height: "20px";
+  width: "20px";
+}
+
+.token:hover{
+  background-color: #dd2f81;
 }

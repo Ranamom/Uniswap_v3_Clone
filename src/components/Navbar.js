@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import PageButton from './PageButton'
 import userContext from './context/userContext'
 import { ethers } from 'ethers'
+import TokenChangeModal from './TokenChangeModal'
 
 const Navbar = () => {
     const context = useContext(userContext)
@@ -9,10 +10,7 @@ const Navbar = () => {
         onClickConnector,
         disconnectWallet,
         account,
-        ethersProvider,
-        userETHbalance,
         expProvider,
-        web3Modal,
     } = context
 
     const [userBalance, setUserBalance] = useState(null)
@@ -40,6 +38,8 @@ const Navbar = () => {
     return (
         <div className="appNav">
             <img src="https://seeklogo.com/images/U/uniswap-logo-782F5E6363-seeklogo.com.png" alt="uniswap-logo" style={{ height: "30px", width: "auto", position: "absolute", left: "10%", top: "2%" }} />
+            <TokenChangeModal/>
+
 
             <div className="rightNav">
                 <div className="connectButtonContainer">
