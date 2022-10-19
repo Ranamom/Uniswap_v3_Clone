@@ -210,7 +210,7 @@ body {
 .inputField {
   padding-left: 10px;
   border-radius: 36px;
-  border: 1px solid #65cdee;
+  border: 1px solid #65ceeea2;
   height: 2rem;
   margin: 10px 0;
   width: 100%;
@@ -227,7 +227,7 @@ body {
   display: none;
   position: absolute;
   /* left: 0%; */
-  background-color: #bbd7e475;
+  background-color: #bbd7e400;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -253,19 +253,27 @@ body {
 
 .token {
   /* background-color: #4c8dac; */
-  margin: 10px;
-  height: auto;
+  /* margin: 5px; */
+  height: 50px;
   color: white;
   display: flex;
   /* justify-content: center; */
   flex-direction: row;
-  /* border-radius: 20px; */
+  border-radius: 20px;
   cursor: pointer;
 }
 
 .imgContainer {
   display: flex;
   align-items: center;
+  margin-left: 10px;
+  /* background-color: white; */
+  /* border-radius: 50px; */
+}
+
+img{
+  background-color: white;
+  border-radius: 20px;
 }
 
 

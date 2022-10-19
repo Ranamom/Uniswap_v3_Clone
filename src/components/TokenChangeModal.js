@@ -82,7 +82,7 @@ const TokenChangeModal = () => {
                     <div className="tokens">
                         <div className="token">
                             <div className="imgContainer">
-                                <img src="https://cdn4.iconfinder.com/data/icons/cryptocoins/227/ETH-alt-512.png" alt="LINK" srcset="" style={{ height: "30px", width: "30px" }} />
+                                <img src="https://cdn4.iconfinder.com/data/icons/cryptocoins/227/ETH-alt-512.png" alt="LINK" srcset="" style={{ height: "40px", width: "40px" }} />
                             </div>
                             <div className="tokenInfo" onClick={() => {onClickTokenChanger('WETH')}}>
                                 <p className='tokenNaming'>Wrapped Ethereum</p>
@@ -91,7 +91,7 @@ const TokenChangeModal = () => {
                         </div>
                         <div className="token">
                             <div className="imgContainer">
-                                <img src="https://seeklogo.com/images/U/uniswap-logo-782F5E6363-seeklogo.com.png" alt="LINK" srcset="" style={{ height: "30px", width: "30px", borderRadius: "30px" }} />
+                                <img src="https://seeklogo.com/images/U/uniswap-logo-782F5E6363-seeklogo.com.png" alt="LINK" srcset="" style={{ height: "40px", width: "40px", borderRadius: "40px" }} />
                             </div>
                             <div className="tokenInfo" onClick={() => {onClickTokenChanger('UNI')}}>
                                 <p className='tokenNaming'>Uniswap Token</p>
@@ -100,7 +100,7 @@ const TokenChangeModal = () => {
                         </div>
                         <div className="token">
                             <div className="imgContainer">
-                                <img src="https://cryptologos.cc/logos/chainlink-link-logo.png" alt="LINK" srcset="" style={{ height: "30px", width: "30px" }} />
+                                <img src="https://cryptologos.cc/logos/chainlink-link-logo.png" alt="LINK" srcset="" style={{ height: "40px", width: "40px" }} />
                             </div>
                             <div className='tokenInfo' onClick={() => {onClickTokenChanger('LINK')}}>
                                 <p className='tokenNaming'>ChainLink</p>
@@ -109,10 +109,12 @@ const TokenChangeModal = () => {
                         </div>
                         <div className="token">
                             <div className="imgContainer">
-                                <img src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" alt="DAI" srcset="" style={{ height: "30px", width: "30px" }} />
+                                <img src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" alt="DAI" srcset="" style={{ height: "40px", width: "40px" }} />
                             </div>
                             <div className='tokenInfo' onClick={() => {onClickTokenChanger('DAI')}}>
-                                <p className='tokenNaming'>ChainLink</p>
+                                <p className='tokenNaming'>
+                                    DAI Token
+                                </p>
                                 <p>DAI</p>
                             </div>
                         </div>

@@ -83,14 +83,14 @@ const Body = () => {
                         tokenName={inputTokenName}
                         getSwapPrice={getSwapPrice}
                         signer={signer}
-                        contract={inputContract} // we can give input contract here
+                        contract={inputContract} 
                         />
                     <CurrencyField   
                         field="output"
                         tokenName={outputTokenName}
                         value={outputAmount} 
                         signer={signer}
-                        contract={outputContract} // we can give output contract here
+                        contract={outputContract} 
                         spinner={BeatLoader} 
                         loading={loading} />
                 </div>

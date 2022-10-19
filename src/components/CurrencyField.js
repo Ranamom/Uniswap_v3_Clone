@@ -34,7 +34,7 @@ const CurrencyField = props => {
       gettingIt()
     } 
 
-  }, [account, balance, props.contract]) 
+  }, [account, props.contract]) 
   
   return (
     <div className="row currencyInput">
