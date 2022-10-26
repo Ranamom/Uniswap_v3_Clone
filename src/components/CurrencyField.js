@@ -8,7 +8,6 @@ const CurrencyField = props => {
     connected,
     setMode,
     mode,
-    setOutputAmount
   } = context
 
   const [balance, setBalance] = useState(null)

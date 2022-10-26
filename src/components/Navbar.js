@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import PageButton from './PageButton'
 import userContext from './context/userContext'
-import { ethers } from 'ethers'
 import TokenChangeModal from './TokenChangeModal'
 
 const Navbar = () => {

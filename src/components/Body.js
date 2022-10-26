@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { GearFill } from 'react-bootstrap-icons'
-import { Token } from '@uniswap/sdk-core'
 import Config from './Config'
 import CurrencyField from './CurrencyField'
 import BeatLoader from "react-spinners/BeatLoader"
@@ -12,8 +11,6 @@ const Body = () => {
         onClickConnector,
         account,
         signer,
-        inputToken,
-        outputToken,
         inputTokenName,
         outputTokenName,
         inputContract,

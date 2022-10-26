@@ -30,8 +30,7 @@ const UserState = (props) => {
     const [linkContract, setLinkContract] = useState(null)
     const [daiContract, setDaiContract] = useState(null)
     const [quoterContract, setQuoterContract] = useState(null)
-
-    const [inputToken, setInputToken] = useState(null) //done
+    const [inputToken, setInputToken] = useState(null)
     const [inputTokenName, setInputTokenName] = useState('WETH')
     const [outputTokenName, setOutputTokenName] = useState('UNI')
     const [outputToken, setOutPutToken] = useState(null)
@@ -43,7 +42,6 @@ const UserState = (props) => {
     const [ratio, setRatio] = useState(null) 
 
     const V3_SWAP_ROUTER_ADDRESS = '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'
-
     const WETH = new Token(5, '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 18, 'WETH', 'Wrapped Ether')
     const UNI = new Token(5, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, 'UNI', 'Uniswap Token')
     const LINK = new Token(5, '0x326C977E6efc84E512bB9C30f76E30c160eD06FB', 18, 'LINK', 'ChainkLink Token')
