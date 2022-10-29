@@ -23,6 +23,7 @@ const UserState = (props) => {
     const [account, setAccount] = useState(null)
     const [web3Modal, setWeb3Modal] = useState(null)
     const [connected, setConnected] = useState(false)
+    const [tokenModalStatus, setTokenModalStatus] = useState(false)
 
     // Contracts
     const [wethContract, setWethContract] = useState(null)
@@ -196,7 +197,7 @@ const UserState = (props) => {
     }
     
     return (
-        <UserContext.Provider value={{ ethersProvider, provider, signer, onClickConnector, account, disconnectWallet, wethContract, uniContract, daiContract, linkContract, userETHbalance, connected, web3Modal, expProvider, quoterContract, ratio, setRatio, getPrice, runSwap, signerInstance, inputToken, setInputToken, inputContract, setInputContract,outputToken, setOutPutToken, outputContract, setOutputContract, WETH, UNI, DAI, LINK, inputTokenName, setInputTokenName, outputTokenName, setOutputTokenName, mode, setMode}}>    
+        <UserContext.Provider value={{ ethersProvider, provider, signer, onClickConnector, account, disconnectWallet, wethContract, uniContract, daiContract, linkContract, userETHbalance, connected, web3Modal, expProvider, quoterContract, ratio, setRatio, getPrice, runSwap, signerInstance, inputToken, setInputToken, inputContract, setInputContract,outputToken, setOutPutToken, outputContract, setOutputContract, WETH, UNI, DAI, LINK, inputTokenName, setInputTokenName, outputTokenName, setOutputTokenName, mode, setMode, setTokenModalStatus, tokenModalStatus}}>    
             {props.children}
         </UserContext.Provider>
     )

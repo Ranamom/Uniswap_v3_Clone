@@ -3,6 +3,7 @@ import userContext from './context/userContext'
 
 const TokenChangeModal = () => {
     const context = useContext(userContext)
+    
     const {
         mode,
         wethContract,
@@ -18,11 +19,13 @@ const TokenChangeModal = () => {
         WETH,
         UNI,
         LINK,
-        DAI
+        DAI,
+        setTokenModalStatus,
+        tokenModalStatus
     } = context
 
     const onCLickOutsideModal = () => {
-        document.getElementsByClassName('token-modal')[0].style.display = "none"
+        setTokenModalStatus(false)
     }
 
     const onClickTokenChanger = (value) => {
@@ -77,7 +80,7 @@ const TokenChangeModal = () => {
 
     return (
         <>
-            <div className="token-modal" onClick={onCLickOutsideModal}>
+            <div className={"token-modal"}  style={tokenModalStatus ? {display: "flex"} : {display: "none"}} onClick={onCLickOutsideModal}>
                 <div className="token-modal-container">
                     <div className="tokens">
                         <div className="token">

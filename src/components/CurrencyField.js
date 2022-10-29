@@ -3,11 +3,12 @@ import userContext from './context/userContext'
 
 const CurrencyField = props => {
   const context = useContext(userContext)
+  
   const {
     account,
     connected,
     setMode,
-    mode,
+    setTokenModalStatus
   } = context
 
   const [balance, setBalance] = useState(null)
@@ -18,9 +19,7 @@ const CurrencyField = props => {
 
   const onCLickToggleModal = () => {
     setMode(props.field.toString())
-    document.getElementsByClassName('token-modal')[0].style.display = "flex"
-    console.log(props.field)
-    console.log(mode)
+    setTokenModalStatus(true)
   }
 
   useEffect(() => {
@@ -64,5 +63,3 @@ const CurrencyField = props => {
 
 export default CurrencyField
 
-//Cannot update a component (`UserState`) while rendering a different component (`TokenChangeModal`). To locate the bad setState() call inside `TokenChangeModal`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
-// at TokenChangeModal (http:

@@ -12,7 +12,7 @@ const Navbar = () => {
     } = context
 
     const [userBalance, setUserBalance] = useState(null)
-    // const [provid, setProvid] = useState(ethersProvider)
+    
     const displayAddress = `${account?.substring(0, 10)}...`
 
     const onClickConnectWallet = () => {
